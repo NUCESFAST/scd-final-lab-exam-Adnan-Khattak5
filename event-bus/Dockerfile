@@ -1,4 +1,4 @@
-# Post Dockerfile
+# Event-bus Dockerfile
 FROM node:14
 
 WORKDIR /1141_backend

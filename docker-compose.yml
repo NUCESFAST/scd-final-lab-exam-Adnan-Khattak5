@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  frontend:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    ports:
+      - "1141:1141"
+    working_dir: /1141_frontend
+    depends_on:
+      - backend
+
+  backend:
+    build:
+      context: ./Post
+      dockerfile: Dockerfile
+    ports:
+      - "3141:3141"
+    working_dir: /3141_backend
+    depends_on:
+      - db
+
+  db:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+
+volumes:
+  mongo-data:

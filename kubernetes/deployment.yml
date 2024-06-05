@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
       - name: my-app
-        image: taimooranwar/my-app:latest
+        image: adnankhattak/my-app:latest
         ports:
         - containerPort: 1141

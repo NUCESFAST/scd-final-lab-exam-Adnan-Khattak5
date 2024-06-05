@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        DOCKERHUB_CREDENTIALS = credentials('dockerhub-credentials')
+        DOCKERHUB_CREDENTIALS = 'dockerhub-credentials'
         DOCKERHUB_USERNAME = 'adnankhattak'
         REPO_NAME = 'scd-final-lab-exam-Adnan-Khattak5'
     }
@@ -20,7 +20,9 @@ pipeline {
                     def services = ['Auth', 'Classrooms', 'event-bus', 'Post', 'client']
                     for (service in services) {
                         dir(service) {
-                            sh 'npm install'
+                            docker.image('node:14').inside {
+                                sh 'npm install'
+                            }
                         }
                     }
                 }

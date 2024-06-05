@@ -33,7 +33,7 @@ pipeline {
                     def services = ['Auth', 'Classrooms', 'event-bus', 'Post', 'client']
                     for (service in services) {
                         dir(service) {
-                            sh "docker build -t ${DOCKERHUB_USERNAME}/${service.toLowerCase()}:latest ."
+                            sh "docker build -t ${adnankhattak}/${service.toLowerCase()}:latest ."
                         }
                     }
                 }
@@ -46,7 +46,7 @@ pipeline {
                     def services = ['Auth', 'Classrooms', 'event-bus', 'Post', 'client']
                     docker.withRegistry('', DOCKERHUB_CREDENTIALS) {
                         for (service in services) {
-                            sh "docker push ${DOCKERHUB_USERNAME}/${service.toLowerCase()}:latest"
+                            sh "docker push ${adnankhattak}/${service.toLowerCase()}:latest"
                         }
                     }
                 }

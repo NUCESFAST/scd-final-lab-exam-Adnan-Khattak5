@@ -15,6 +15,12 @@ pipeline {
         }
         
         stage('Install Dependencies 1141') {
+            agent {
+                docker {
+                    image 'node:17' // Use a Node.js Docker image
+                    args '-v /var/run/docker.sock:/var/run/docker.sock' // Allow Docker inside Docker
+                }
+            }
             steps {
                 script {
                     def services = ['Auth', 'Classrooms', 'event-bus', 'Post', 'client']
@@ -33,7 +39,7 @@ pipeline {
                     def services = ['Auth', 'Classrooms', 'event-bus', 'Post', 'client']
                     for (service in services) {
                         dir(service) {
-                            sh "docker build -t ${adnankhattak}/${service.toLowerCase()}:latest ."
+                            sh "docker build -t ${DOCKERHUB_USERNAME}/${service.toLowerCase()}:latest ."
                         }
                     }
                 }
@@ -46,7 +52,7 @@ pipeline {
                     def services = ['Auth', 'Classrooms', 'event-bus', 'Post', 'client']
                     docker.withRegistry('', DOCKERHUB_CREDENTIALS) {
                         for (service in services) {
-                            sh "docker push ${adnankhattak}/${service.toLowerCase()}:latest"
+                            sh "docker push ${DOCKERHUB_USERNAME}/${service.toLowerCase()}:latest"
                         }
                     }
                 }
